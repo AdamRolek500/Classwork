@@ -85,14 +85,16 @@ int add_student(Student *students, int index)
     cin >> cli.first_name;
     cout << "Last Name > ";
     cin >> cli.last_name;
-    for(int j = 0; j < 4; j++){
+    for(int j = 0; j < 4; j++)
+    {
         cli.grades[j] = 0;
     }
     students[index] = cli;
     return ++index;
 }
 
-int choose_student(Student *students, int index){
+int choose_student(Student *students, int index)
+{
     int student_id;
     system("clear");
     cout << "Choose student Menu\n" << endl;
@@ -105,15 +107,17 @@ int choose_student(Student *students, int index){
     return student_id;
 }
 
-void display_student_balance(Student *students, int index){
+void display_student_balance(Student *students, int index)
+{
     // displaying all students and the grades
     system("clear");
     for(int i = 0; i < index; i++)
     {
         cout << "Student Name : " << students[i].first_name << " " << students[i].last_name << endl
              << "Student ID : " << students[i].student_id << endl;
-        for(int j = 0; j < 4; j++){
-                cout << "Test " << j + 1 << ": " << students[i].grades[j] << endl;
+        for(int j = 0; j < 4; j++)
+        {
+            cout << "Test " << j + 1 << ": " << students[i].grades[j] << endl;
         }
         cout << endl;
     }
@@ -125,9 +129,10 @@ void display_student_balance(Student *students, int index){
     double total = 0, num_of_tests = 0, highest, lowest;
     for(int i = 0; i < index; i++)
     {
-        for(int j = 0; j < 4; j++){
-                total += students[i].grades[j];
-                num_of_tests++;
+        for(int j = 0; j < 4; j++)
+        {
+            total += students[i].grades[j];
+            num_of_tests++;
         }
     }
     cout << (total / num_of_tests) << endl;
@@ -139,9 +144,10 @@ void display_student_balance(Student *students, int index){
     total = num_of_tests = 0;
     for(int i = 0; i < 4; i++)
     {
-        for(int j = 0; j < index; j++){
-                total += students[j].grades[i];
-                num_of_tests++;
+        for(int j = 0; j < index; j++)
+        {
+            total += students[j].grades[i];
+            num_of_tests++;
         }
         cout << "Test " << i + 1 << ": " << (total / num_of_tests) << endl;
         num_of_tests = total = 0;
@@ -154,14 +160,18 @@ void display_student_balance(Student *students, int index){
     Student high_stu, low_stu;
     for(int i = 0; i < index; i++)
     {
-        for(int j = 0; j < 4; j++){
-                total += students[i].grades[j];
-                num_of_tests++;
+        for(int j = 0; j < 4; j++)
+        {
+            total += students[i].grades[j];
+            num_of_tests++;
         }
-        if ((total / num_of_tests) > highest){
+        if ((total / num_of_tests) > highest)
+        {
             highest = (total / num_of_tests);
             high_stu = students[i];
-        } else if ((total / num_of_tests) < lowest){
+        }
+        else if ((total / num_of_tests) < lowest)
+        {
             lowest = (total / num_of_tests);
             low_stu = students[i];
         }
@@ -172,15 +182,18 @@ void display_student_balance(Student *students, int index){
     system("echo Press enter to continue; read dummy;");
 }
 
-void edit_student_balance(Student *students, int student_id, int index){
+void edit_student_balance(Student *students, int student_id, int index)
+{
     system("clear");
     int choice, amount;
     for(int i = 0; i < index; i++)
     {
-        if(students[i].student_id == student_id){
+        if(students[i].student_id == student_id)
+        {
             // EDIT GRADES
             cout << "student Name : " << students[i].first_name << " " << students[i].last_name << endl;
-            for(int j = 0; j < 4; j++){
+            for(int j = 0; j < 4; j++)
+            {
                 cout << "Enter grade for test " << j + 1 << ": ";
                 cin >> students[i].grades[j];
             }
