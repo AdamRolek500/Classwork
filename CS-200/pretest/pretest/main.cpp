@@ -172,12 +172,13 @@ void display_student_balance(Student *students, int index)
             total += students[i].grades[j];
             num_of_tests++;
         }
+
         if ((total / num_of_tests) > highest)
         {
             highest = (total / num_of_tests);
             high_stu = students[i];
         }
-        else if ((total / num_of_tests) < lowest)
+        if ((total / num_of_tests) < lowest)
         {
             lowest = (total / num_of_tests);
             low_stu = students[i];
