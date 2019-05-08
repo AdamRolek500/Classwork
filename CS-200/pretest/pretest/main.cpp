@@ -78,6 +78,9 @@ int add_student(Student *students, int index)
 {
     /**
     **/
+    if (index > 99)
+        return index;
+    system("clear");
     Student cli;
     // Add 1 because the array is 0 indexed
     cli.student_id = index + 1;
@@ -95,6 +98,8 @@ int add_student(Student *students, int index)
 
 int choose_student(Student *students, int index)
 {
+    if (index <= 0)
+        return -1;
     int student_id;
     system("clear");
     cout << "Choose student Menu\n" << endl;
@@ -109,6 +114,8 @@ int choose_student(Student *students, int index)
 
 void display_student_balance(Student *students, int index)
 {
+    if (index <= 0)
+        return;
     // displaying all students and the grades
     system("clear");
     for(int i = 0; i < index; i++)
@@ -184,6 +191,8 @@ void display_student_balance(Student *students, int index)
 
 void edit_student_balance(Student *students, int student_id, int index)
 {
+    if (index <= 0)
+        return;
     system("clear");
     int choice, amount;
     for(int i = 0; i < index; i++)
@@ -194,8 +203,12 @@ void edit_student_balance(Student *students, int student_id, int index)
             cout << "student Name : " << students[i].first_name << " " << students[i].last_name << endl;
             for(int j = 0; j < 4; j++)
             {
-                cout << "Enter grade for test " << j + 1 << ": ";
-                cin >> students[i].grades[j];
+                int grade;
+                do {
+                    cout << "Enter grade for test " << j + 1 << ": ";
+                    cin >> grade;
+                } while (grade < 0 || grade > 100);
+                students[i].grades[j] = grade;
             }
         }
     }
