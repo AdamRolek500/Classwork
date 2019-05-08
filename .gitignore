@@ -1,0 +1,10 @@
+
+labs/lab_1/bin/Debug/
+
+*.cbp
+
+*.depend
+
+*.layout
+
+*.o
