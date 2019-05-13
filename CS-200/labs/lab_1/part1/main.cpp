@@ -26,24 +26,8 @@ int choose_client(Client *clients, int index);
 
 int main()
 {
-    int option, index = 2, client_id;
+    int option, index = 0, client_id;
     Client clients[25];
-
-    // TESTING
-    Client cli1, cli2;
-
-    cli1.client_id = 1;
-    cli1.first_name = "Adam";
-    cli1.last_name = "Rolek";
-    cli1.balance = 123.456;
-    clients[0] = cli1;
-
-    cli2.client_id = 2;
-    cli2.first_name = "John";
-    cli2.last_name = "Rolex";
-    cli2.balance = -123.00;
-    clients[1] = cli2;
-    //cout << cli1.first_name << " " << cli1.last_name << "\nBalance: " << cli1.balance << endl;
 
     do
     {
