@@ -18,6 +18,7 @@ class Client
         void setName(string firstName, string lastName);
         void setBalnce(double balance);
         void setID(int id);
+        void showStats();
     private:
         string firstName, lastName;
         int id;

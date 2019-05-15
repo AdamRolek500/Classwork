@@ -34,7 +34,7 @@ string Client::getName(){
 // Setters
 
 void Client::setBalnce(double balance){
-    if (this->balance + balance >= 0){ // The resulting balance is positive
+    if (this->getBalance() + balance >= 0){ // The resulting balance is positive
         this->balance += balance;
     } else {
         cerr << "Not enough money!" << endl;
@@ -50,4 +50,12 @@ void Client::setID(int id){
 void Client::setName(string firstName, string lastName){
     this->firstName = firstName;
     this->lastName = lastName;
+}
+
+// Utilities
+
+void Client::showStats(){
+    cout << "Client name: " << this->getName() << endl
+         << "ID: " << this->getID() << endl
+         << "Balance: " << this->getBalance() << endl;
 }
