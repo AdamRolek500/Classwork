@@ -20,6 +20,7 @@ public:
     void setName(string firstName, string lastName);
     void setBalnce(double balance);
     void setID(int id);
+    // Utils
     void showStats();
 private:
     string firstName, lastName;

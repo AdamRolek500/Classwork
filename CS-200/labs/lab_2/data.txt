@@ -1,8 +1,12 @@
 adam
 rolek
 1
-5
+2.5
 jon
 rolek
 2
 6
+hey
+there
+3
+600
