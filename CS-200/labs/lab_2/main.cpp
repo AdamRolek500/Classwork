@@ -10,6 +10,8 @@ int add_client(Client *clients, int index);
 int read_from_file(Client *clients, int index);
 int choose_client(Client *clients, int index);
 void write_to_file(Client *clients, int index);
+string encrypt(string to_encypt, char key);
+string decrypt(string to_decrypt, char key);
 
 int main()
 {
@@ -91,7 +93,8 @@ int add_client(Client *clients, int index)
     return ++index;
 }
 
-int choose_client(Client *clients, int index){
+int choose_client(Client *clients, int index)
+{
     int client_id;
     system("clear");
     cout << "Choose Client Menu\n" << endl;
@@ -110,8 +113,8 @@ void write_to_file(Client *clients, int index)
     myfile.open ("data.txt");
     for(int i = 0; i < index; i++)
     {
-        myfile << clients[i].getFirstName() << endl
-               << clients[i].getLastName() << endl
+        myfile << encrypt(clients[i].getFirstName(), 'k') << endl
+               << encrypt(clients[i].getLastName(), 'k') << endl
                << clients[i].getID() << endl
                << clients[i].getBalance() << endl;
     }
@@ -124,14 +127,53 @@ int read_from_file(Client *clients, int index)
     ifstream infile;
     infile.open("data.txt");
     string fname, lname;
-    int id;
-    double balance;
-    while(infile >> fname >> lname >> id >> balance)
+    string id;
+    string balance;
+    while(! infile.eof())
     {
-        Client cli(fname, lname, id, balance);
+        getline(infile, fname);
+        if(fname == "")
+            break;
+        getline(infile, lname);
+        getline(infile, id);
+        getline(infile, balance);
+        cout << fname << endl
+             << lname << endl
+             << id << endl
+             << balance << endl;
+        Client cli(decrypt(fname, 'k'), decrypt(lname, 'k'), stoi(id), (double)stoi(balance));
         clients[index] = cli;
         ++index;
     }
     infile.close();
+
+    system("echo Press enter to continue; read dummy;");
     return index;
+}
+
+string encrypt(string to_encrypt, char key){
+    string output = to_encrypt;
+    string fin = "";
+
+    for (int i = 0; i < to_encrypt.size(); i++)
+        output[i] = to_encrypt[i] ^ key;
+
+    for(int i = 0; i < output.size(); i++){
+        fin += std::to_string((int)output[i]) + " ";
+    }
+
+    return fin;
+}
+
+string decrypt(string to_decrypt, char key){
+    size_t pos = 0;
+    std::string token;
+    string delimiter = " ";
+    string output = "";
+    while ((pos = to_decrypt.find(delimiter)) != std::string::npos) {
+        token = to_decrypt.substr(0, pos);
+        output += (char)stoi(token) ^ key;
+        to_decrypt.erase(0, pos + delimiter.length());
+    }
+    return output;
 }
