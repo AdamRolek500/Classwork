@@ -1,3 +1,3 @@
-[submodule "CS-200/project1/"]
-	path = CS-200/project1/
+[submodule "CS-200/project1"]
+	path = CS-200/project1
 	url = https://github.com/AdamRolek500/project1.git
