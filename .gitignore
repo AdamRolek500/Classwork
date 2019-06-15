@@ -24,3 +24,7 @@ CS-200/labs/lab_1/part3/part3/bin/Debug/
 CS-200/labs/lab_2/data\.txt
 
 *.txt
+
+CS-200/labs/lab_6/\.idea/
+
+CS-200/labs/lab_6/cmake-build-debug/
