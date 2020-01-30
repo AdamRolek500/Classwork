@@ -42,6 +42,7 @@ function solve() {
         document.getElementById("labels").innerHTML = "Error!";
         document.getElementById("result").value = arr[0];
     } else {
+        memoryAdd(eq);
         document.getElementById("result").value = eval(arr[0] + arr[1] + arr[2]);
     }
 }
@@ -49,5 +50,19 @@ function solve() {
 function clr() {
     console.log("Cleared the display.");
     document.getElementById("result").value = "";
+}
+
+function memoryAdd(eq) {
+    let ul = document.getElementById("memoryTape");
+    let li = document.createElement("li");
+    let button = document.createElement("button");
+    button.innerHTML = eq;
+    button.setAttribute("onClick", "recallMemory(this.innerHTML)");
+    li.appendChild(button);
+    ul.appendChild(li);
+}
+
+function recallMemory(id){
+    alert(id);
 }
 
