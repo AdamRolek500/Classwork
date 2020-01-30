@@ -1,6 +1,6 @@
 body {
     background: rgb(0,0,0);
-    background: linear-gradient(124deg, rgba(0,0,0,1) 0%, rgb(112, 112, 112) 50%, rgba(0,0,0,1) 100%);
+    background: linear-gradient(124deg, rgba(0,0,0,1) 0%, rgb(76, 76, 76) 50%, rgba(0,0,0,1) 100%);
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
@@ -28,6 +28,10 @@ body {
     text-align: center;
     height: 50px;
     width: 50px;
+}
+
+.numberButton:hover, .operationButton:hover{
+    background-color: #1d1d1d;
 }
 
 #result {
