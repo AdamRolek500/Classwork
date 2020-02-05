@@ -1,17 +1,22 @@
+<!--
+Calculator project for Javascript
+
+By: Adam Rolek
+Date: 2/3/2020
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Calculator</title>
     <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="shortcut icon" href="favicon.png" />
     <script src="main.js"></script>
 </head>
 <body>
-
+<div class=labels>Calculator</div>
 <div id="bodyContent">
-
-    <div class=labels>Calculator</div>
-
     <table id="calculator">
         <tr>
             <td colspan="3"><input type="text" id="result"/></td>
@@ -41,13 +46,27 @@
             <td><input type="button" class="operationButton" value="=" onclick="solve()"/></td>
             <td><input type="button" class="operationButton" value="*" onclick="dis(' * ')"/></td>
         </tr>
+        <tr>
+            <td><input type="button" class="operationButton" value="PI" onclick="dis('PI')"/></td>
+            <td><input type="button" class="operationButton" value="+/-" onclick="dis('+/-')"/></td>
+            <td><input type="button" class="operationButton" value="X^Y" onclick="dis(' ^ ')"/></td>
+            <td><input type="button" class="operationButton" value="1/X" onclick="dis('1/X')"/></td>
+        </tr>
     </table>
-
-    <ul id="memoryTape"></ul>
-
-    <div class=labels id="labels"></div>
-
+    <table id="memoryTable">
+        <tr>
+            <td colspan="2"><input type="button" class="clearMemory" value="Clear" onclick="clearMem()"/></td>
+        </tr>
+        <tr>
+            <td>
+                <ul id="memoryEQ"></ul>
+            </td>
+            <td>
+                <ul id="memoryResult"></ul>
+            </td>
+        </tr>
+    </table>
 </div>
-
+<div class=labels id="labels"></div>
 </body>
 </html>
