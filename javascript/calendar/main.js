@@ -42,6 +42,13 @@ function loadCalendar() {
     //         cell.innerHTML = i + j + 1;
     //     }
     // }
+
+
+    let temp = document.getElementById("calPane");
+    let clon = temp.content.cloneNode(true);
+    clon.getElementById("paneDate").innerHTML = today.toDateString();
+    let cell = row.insertCell();
+    cell.appendChild(clon);
 }
 
 function addEvent(date) {
