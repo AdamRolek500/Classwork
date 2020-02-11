@@ -23,8 +23,11 @@
     </table>
 </div>
 
-<template id="calPane" class="calPane">
-    <p id="paneDate"></p>
+<template id="calPane">
+    <div id="paneDiv" onclick="addEvent(event)" class="calPane">
+        <p id="paneDate"></p>
+        <button id="paneButton" onclick="test(event)">TEST</button>
+    </div>
 </template>
 
 </body>

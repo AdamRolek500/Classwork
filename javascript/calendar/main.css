@@ -1,8 +1,10 @@
-#paneDate {
+.calPane {
     background-color: aqua;
+    color: #ff0100;
 }
 
 #calTable {
-    margin: auto;
-    padding: 0;
+    /*margin: auto;*/
+    height: 50%;
+    width: 100%;
 }
