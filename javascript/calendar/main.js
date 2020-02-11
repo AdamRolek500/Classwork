@@ -34,5 +34,18 @@ function addEvent(event) {
 
 function test(event) {
     event.stopPropagation();
-    alert("qwerty");
+    // alert("HEY");
+    getAjax('http://localhost:8000', function(data){ console.log(data); });
+    // alert("THERE");
+}
+
+function getAjax(url, success) {
+    var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.open('POST', url);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState>3 && xhr.status===200) success(xhr.responseText);
+    };
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.send();
+    return xhr;
 }
