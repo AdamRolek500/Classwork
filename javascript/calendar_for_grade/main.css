@@ -1,0 +1,20 @@
+.today {
+    /*color: rgba(0, 0, 255, 0.34);*/
+    background-color: #c7c7c7;
+}
+
+.notToday {
+}
+
+.weekend {
+    background-color: #c6c6c6;
+}
+
+.dayName {
+    background-color: #e4e4e4;
+}
+
+td, th{
+    width: 30px;
+    text-align: center;
+}
