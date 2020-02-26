@@ -10,15 +10,18 @@
 <button id="hello" onclick="loadCalendar()">CLICK ME</button>
 
 <div>
-    <button onclick="loadCalendar()"><<</button>
-    <button onclick="loadCalendar()"><</button>
-    <button onclick="loadCalendar()">T</button>
-    <button onclick="loadCalendar()">></button>
-    <button onclick="loadCalendar()">>></button>
+    <button onclick="loadCalendar('<<')"><<</button>
+    <button onclick="loadCalendar('<')"><</button>
+    <button onclick="loadCalendar('T')">T</button>
+    <button onclick="loadCalendar('>')">></button>
+    <button onclick="loadCalendar('>>')">>></button>
 </div>
 
 <div>
     <table id="calTable" border="1">
+        <tr>
+            <th colspan="7" id="calHeader"></th>
+        </tr>
         <tr>
             <th class="dayName">Sun</th>
             <th class="dayName">Mon</th>
