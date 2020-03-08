@@ -5,12 +5,22 @@
     <title>Countdown Timer</title>
     <script src="main.js"></script>
 </head>
-<body>
-<button onclick="test()">HEY</button>
-<input type="date">
-<br>
+<body onload="load()">
+<form onsubmit="changeDate(); return false;">
+    <label>
+        <input id="datePick" type="date">
+        <input id="timePick" type="time">
+    </label>
+    <input type="submit" value="Submit">
+</form>
+
 <label id="currentDate"></label>
+
 <br>
 <label id="futureDate"></label>
+
+<br>
+<label id="countdown"></label>
+
 </body>
 </html>

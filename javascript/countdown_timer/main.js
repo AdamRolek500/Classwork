@@ -1,24 +1,42 @@
-function test() {
+let countDownDate;
+
+function load() {
     let now = new Date();
-    let future = new Date(2020, 4, 24);
-    document.getElementById("currentDate").innerText = now.toDateString();
-    document.getElementById("futureDate").innerText = future.toDateString();
-    let difference = future - now;
-    msToHMS(difference);
-    console.log(difference)
+    countDownDate = new Date(now.getFullYear() + 1, 0, 1);
+    document.getElementById("currentDate").innerText = "Today's date: " + now.toDateString() + " " + now.toLocaleTimeString();
+    document.getElementById("futureDate").innerText = "Target date: " + countDownDate.toDateString() + " " + countDownDate.toLocaleTimeString();
+
+    let x = setInterval(function () {
+        now = new Date();
+        document.getElementById("currentDate").innerText = "Today's date: " + now.toDateString() + " " + now.toLocaleTimeString();
+
+        // This will return the milliseconds between the dates.
+        let distance = countDownDate.getTime() - now.getTime();
+
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("countdown").innerHTML = "PAST!";
+        }
+    }, 1000);
 }
 
-function msToHMS( ms ) {
-    // 1- Convert to seconds:
-    let seconds = ms / 1000;
-    let days = seconds / 86400;
-    seconds = seconds % 86400;
-    // 2- Extract hours:
-    let hours = seconds / 3600; // 3,600 seconds in 1 hour
-    seconds = seconds % 3600; // seconds remaining after extracting hours
-    // 3- Extract minutes:
-    let minutes = seconds / 60; // 60 seconds in 1 minute
-    // 4- Keep only seconds not extracted to minutes:
-    seconds = seconds % 60;
-    console.log( days+":"+hours+":"+minutes+":"+seconds);
+function changeDate() {
+    let dateString = document.getElementById("datePick").value.split("-");  //.replace(/-/, "/").replace(/-/, "/");
+    let timeString = document.getElementById("timePick").value.split(":");
+    let newDate = new Date(dateString[0], dateString[1] - 1, dateString[2], timeString[0], timeString[1]);
+    if (newDate instanceof Date && !isNaN(newDate.getTime())) {
+        countDownDate = newDate;
+        document.getElementById("futureDate").innerText = "Target date: " + countDownDate.toDateString() + " " + countDownDate.toLocaleTimeString();
+    } else {
+        // do nothing
+        console.warn("That is not a date and time!");
+    }
 }
