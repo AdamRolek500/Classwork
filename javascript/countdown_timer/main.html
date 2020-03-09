@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Countdown Timer</title>
-    <script src="main.js"></script>
-</head>
-<body onload="load()">
-<form onsubmit="changeDate(); return false;">
-    <label>
-        <input id="datePick" type="date">
-        <input id="timePick" type="time">
-    </label>
-    <input type="submit" value="Submit">
-</form>
+    <head>
+        <meta charset="UTF-8">
+        <title>Countdown Timer</title>
+        <script src="main.js"></script>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body onload="load()">
 
-<label id="currentDate"></label>
+        <div id="container">
 
-<br>
-<label id="futureDate"></label>
+            <div id="infoPanel">
+                <label id="currentDate"></label>
+                <br>
+                <label id="futureDate"></label>
+                <br>
+                <label id="countdown"></label>
+            </div>
 
-<br>
-<label id="countdown"></label>
+            <div id="directionPanel">
+                <form onsubmit="changeDate(); return false;">
+                    <label>
+                        <input id="datePick" type="date">
+                        <input id="timePick" type="time">
+                    </label>
+                    <input type="submit" value="Submit">
+                </form>
+                <p>The countdown timer will default to the following new year from the current date. I wanted to add<br>
+                    more functionality as a challenge, so I have added the ability to control the target date. You <br>
+                    must choose a date and specify a time. After clicking submit the target date will change if the <br>
+                    resulting date object is valid. As a style choice I have included the current and future time in<br>
+                    the date strings. The current time and date will update every second as well <br>
+                    as the remaining time.</p>
+            </div>
 
-</body>
+        </div>
+
+    </body>
 </html>

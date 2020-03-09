@@ -3,12 +3,16 @@ let countDownDate;
 function load() {
     let now = new Date();
     countDownDate = new Date(now.getFullYear() + 1, 0, 1);
-    document.getElementById("currentDate").innerText = "Today's date: " + now.toDateString() + " " + now.toLocaleTimeString();
-    document.getElementById("futureDate").innerText = "Target date: " + countDownDate.toDateString() + " " + countDownDate.toLocaleTimeString();
+    document.getElementById("currentDate").innerText = "Today's date: " + now.toDateString() + " " +
+        now.toLocaleTimeString();
+    document.getElementById("futureDate").innerText = "Target date: " + countDownDate.toDateString() + " " +
+        countDownDate.toLocaleTimeString();
+    document.getElementById("countdown").innerHTML = "Time Remaining: 0 days, 0 hours, 0 minutes, 0 seconds";
 
     let x = setInterval(function () {
         now = new Date();
-        document.getElementById("currentDate").innerText = "Today's date: " + now.toDateString() + " " + now.toLocaleTimeString();
+        document.getElementById("currentDate").innerText = "Today's date: " + now.toDateString() + " " +
+            now.toLocaleTimeString();
 
         // This will return the milliseconds between the dates.
         let distance = countDownDate.getTime() - now.getTime();
@@ -18,8 +22,8 @@ function load() {
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-            + minutes + "m " + seconds + "s ";
+        document.getElementById("countdown").innerHTML = "Time Remaining: " + days + " days, " + hours +
+            " hours, " + minutes + " minutes, " + seconds + " seconds";
 
         if (distance < 0) {
             clearInterval(x);
@@ -29,12 +33,13 @@ function load() {
 }
 
 function changeDate() {
-    let dateString = document.getElementById("datePick").value.split("-");  //.replace(/-/, "/").replace(/-/, "/");
+    let dateString = document.getElementById("datePick").value.split("-");
     let timeString = document.getElementById("timePick").value.split(":");
     let newDate = new Date(dateString[0], dateString[1] - 1, dateString[2], timeString[0], timeString[1]);
     if (newDate instanceof Date && !isNaN(newDate.getTime())) {
         countDownDate = newDate;
-        document.getElementById("futureDate").innerText = "Target date: " + countDownDate.toDateString() + " " + countDownDate.toLocaleTimeString();
+        document.getElementById("futureDate").innerText = "Target date: " + countDownDate.toDateString() +
+            " " + countDownDate.toLocaleTimeString();
     } else {
         // do nothing
         console.warn("That is not a date and time!");
