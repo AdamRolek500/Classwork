@@ -1,0 +1,15 @@
+#infoPanel {
+    margin: 0 auto;
+    display: inline-block;
+    font-size: large;
+}
+
+#directionPanel {
+    display: inline-block;
+    margin: 0 auto;
+    vertical-align: top;
+}
+
+#container {
+    width: 100%;
+}
