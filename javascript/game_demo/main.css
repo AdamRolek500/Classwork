@@ -1,0 +1,9 @@
+#circles, #squares {
+    display: inline-block;
+    border: black 1px solid;
+    text-align: center;
+}
+
+canvas {
+    border: black 1px solid;
+}
