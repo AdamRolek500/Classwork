@@ -88,7 +88,7 @@ function stopMove() {
     my_circle.speedX = 0;
     my_circle.speedY = 0;
 }
-// -------------------------------------------- //
+
 function moveup_circle() {
     my_circle.speedY -= 1;
 }
