@@ -1,0 +1,16 @@
+.space {
+    width: 50px;
+    height: 50px;
+    background-color: #d9d9d9;
+    color: transparent;
+}
+
+.active {
+    width: 50px;
+    height: 50px;
+    background-color: #ff8704;
+}
+
+::selection{
+    color: transparent;
+}
