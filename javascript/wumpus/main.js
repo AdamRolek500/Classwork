@@ -1,3 +1,4 @@
+// TODO: Make the indicators non-visible by assigning a class.
 function onLoad() {
     let board = document.getElementById("board");
 
@@ -6,7 +7,7 @@ function onLoad() {
         for (let j = 0; j < 5; j++) {
             let newCell = newRow.insertCell(); // inserting new cells
             newCell.setAttribute("class", "space");
-            //newCell.setAttribute("onclick", "replaceCell(this)")
+            newCell.setAttribute("onclick", "fireArrow(this)")
         }
     }
 
@@ -14,18 +15,10 @@ function onLoad() {
     let r = Math.floor(Math.random() * 5);
     let c = Math.floor(Math.random() * 5);
     place_indicator(board, 'W', r, c);
-    // adding the Stench
-    place_indicator(board, 'S', r - 1, c);
-    place_indicator(board, 'S', r + 1, c);
-    place_indicator(board, 'S', r, c - 1);
-    place_indicator(board, 'S', r, c + 1);
-    place_indicator(board, 'S', r + 1, c + 1);
-    place_indicator(board, 'S', r - 1, c - 1);
-    place_indicator(board, 'S', r - 1, c + 1);
-    place_indicator(board, 'S', r + 1, c - 1);
+    // adding the stench
+    findingNeighbors(board, r, c, 'S');
 
-
-    // placing the Pits
+    // placing the Pits, I want this in an empty space.
     let placed = false;
     do {
         r = Math.floor(Math.random() * 5);
@@ -37,16 +30,9 @@ function onLoad() {
         }
     } while (!placed);
     // adding the breeze
-    place_indicator(board, 'B', r - 1, c);
-    place_indicator(board, 'B', r + 1, c);
-    place_indicator(board, 'B', r, c - 1);
-    place_indicator(board, 'B', r, c + 1);
-    place_indicator(board, 'B', r + 1, c + 1);
-    place_indicator(board, 'B', r - 1, c - 1);
-    place_indicator(board, 'B', r - 1, c + 1);
-    place_indicator(board, 'B', r + 1, c - 1);
+    findingNeighbors(board, r, c, 'B');
 
-    // placing the Player
+    // placing the Player, I want the player starting on an empty space.
     placed = false;
     do {
         r = Math.floor(Math.random() * 5);
@@ -61,11 +47,17 @@ function onLoad() {
     } while (!placed);
 }
 
-// function replaceCell(node) {
-//     console.log(node);
-//     let newText  = document.createTextNode('W');
-//     node.appendChild(newText);
-// }
+function findingNeighbors(board, i, j, indicator) {
+    let rowLimit = 4;
+    let columnLimit = 4;
+    for(let row = Math.max(0, i-1); row <= Math.min(i+1, rowLimit); row++) {
+        for(let cell = Math.max(0, j-1); cell <= Math.min(j+1, columnLimit); cell++) {
+            if(row !== i || cell !== j) {
+                place_indicator(board, indicator, row, cell);
+            }
+        }
+    }
+}
 
 function place_indicator(board, indicator, r, c) {
     if (r >= 0 && r <= 4 && c >= 0 && c <= 4) {
@@ -75,6 +67,31 @@ function place_indicator(board, indicator, r, c) {
     }
 }
 
+function fireArrow(node) {
+    let row = window.playerRow;
+    let cell = window.playerCell;
+    let playerRow = node.parentNode.rowIndex;
+    let playerCell = node.cellIndex;
+    if (dist(cell, playerCell, row, playerRow) <= 1.5) {
+        if (node.innerHTML === "W"){
+            // TODO: Implement a better win.
+            alert("You Win!");
+        } else {
+            console.log("Miss!");
+            // TODO: Tell player they missed.
+        }
+    } else {
+        // TODO: Tell player they are not in range.
+        console.log("Out of Range!");
+    }
+}
+
+function dist(x1, x2, y1, y2) {
+    let xi = x2 - x1;
+    let yi = y2 - y1;
+    return Math.sqrt((xi * xi) + (yi * yi));
+}
+// TODO: Make sure the player is not moving off the board
 function move(direction) {
     let board = document.getElementById("board");
     let cell = board.rows[window.playerRow].cells[window.playerCell];
@@ -95,4 +112,8 @@ function move(direction) {
     }
     cell = board.rows[window.playerRow].cells[window.playerCell];
     cell.setAttribute("class", "active");
+    if (cell.innerHTML === "P" || cell.innerHTML === "W") {
+        alert("You Lose!");
+        // TODO: Implement a real lose screen? Refresh?
+    }
 }

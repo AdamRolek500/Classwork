@@ -7,18 +7,20 @@
     <script src="main.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css">
 </head>
-
+<!---->
 <body onload="onLoad()">
-    <table id="board" border="1">
-
-    </table>
     <div>
-        <button onclick="move('^')">^</button>
-        <br>
-        <button onclick="move('<')"><</button>
-        <button onclick="move('>')">></button>
-        <br>
-        <button onclick="move('v')">v</button>
+        <div>
+            <table id="board" border="1"></table> <!-- I will fill the table with Javascript on load. -->
+        </div>
+        <div>
+            <button onclick="move('^')">^</button>
+            <br>
+            <button onclick="move('<')"><</button>
+            <button onclick="move('>')">></button>
+            <br>
+            <button onclick="move('v')">v</button>
+        </div>
     </div>
 </body>
 
