@@ -1,6 +1,12 @@
-// TODO: Make the indicators non-visible by assigning a class.
 function onLoad() {
     let board = document.getElementById("board");
+    // Setting up some music for the game
+    let audio = new Audio('background_noise.mp3');
+    audio.addEventListener('ended', function() {
+        this.currentTime = 0;
+        this.play();
+    }, false);
+    audio.play();
 
     for (let i = 0; i < 5; i++) {
         let newRow = board.insertRow(); // inserting a new row
@@ -16,7 +22,7 @@ function onLoad() {
     let c = Math.floor(Math.random() * 5);
     place_indicator(board, 'W', r, c);
     // adding the stench
-    findingNeighbors(board, r, c, 'S');
+    findingNeighbors(board, r, c, 'stench');
 
     // placing the Pits, I want this in an empty space.
     let placed = false;

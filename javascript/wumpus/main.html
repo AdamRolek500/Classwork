@@ -10,16 +10,24 @@
 <!---->
 <body onload="onLoad()">
     <div>
-        <div>
+        <div id="boardDiv">
             <table id="board" border="1"></table> <!-- I will fill the table with Javascript on load. -->
         </div>
-        <div>
-            <button onclick="move('^')">^</button>
+        <div id="buttonsDiv">
+            <button onclick="move('^')" class="directionButton">
+                <i class="arrow up"></i>
+            </button>
             <br>
-            <button onclick="move('<')"><</button>
-            <button onclick="move('>')">></button>
+            <button onclick="move('<')" class="directionButton">
+                <i class="arrow left"></i>
+            </button>
+            <button onclick="move('>')" class="directionButton">
+                <i class="arrow right"></i>
+            </button>
             <br>
-            <button onclick="move('v')">v</button>
+            <button onclick="move('v')" class="directionButton">
+                <i class="arrow down"></i>
+            </button>
         </div>
     </div>
 </body>
