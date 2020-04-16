@@ -67,9 +67,12 @@ function findingNeighbors(board, i, j, indicator) {
 
 function place_indicator(board, indicator, r, c) {
     if (r >= 0 && r <= 4 && c >= 0 && c <= 4) {
-        let indic = document.createTextNode(indicator);
+        // <img src="H.gif" alt="" border=3 height=100 width=100>
         let cell = board.rows[r].cells[c];
+        let indic = document.createTextNode(indicator);
         cell.appendChild(indic);
+        cell.innerHTML = "<img src='wind.gif' height=50 width=50>";
+        // cell.setAttribute("data-indic", indicator);
     }
 }
 
