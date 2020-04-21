@@ -1,8 +1,9 @@
 .space {
     width: 50px;
     height: 50px;
-    background-color: #d9d9d9;
-    /*color: transparent;*/
+    background-color: #f0f0f0;
+    color: transparent;
+    border: solid black 1px;
 }
 
 .levelButton {
@@ -20,18 +21,38 @@
 .active {
     width: 50px;
     height: 50px;
-    background-color: #ff8704;
+    background-color: #ffb77a;
     transition: background-color 1s;
     background-size: 50px 50px;
     color: transparent;
+    border: solid black 1px;
 }
 
-::selection{
+.space::selection{
     color: transparent;
+}
+
+li {
+    background: white;
+}
+
+li:nth-child(odd) {
+    background: #eeeeee;
 }
 
 #buttonsDiv {
     text-align: center;
+}
+
+#alerts {
+    list-style-type: none;
+    border: solid black 1px;
+    width: 284px;
+    height: 100px;
+    margin: auto;
+    padding: 0;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 #board {

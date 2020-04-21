@@ -75,8 +75,6 @@ function place_indicator(board, indicator, r, c) {
         let cell = board.rows[r].cells[c];
         let indic = document.createTextNode(indicator);
         cell.appendChild(indic);
-        // cell.innerHTML = "<img src='wind.gif' height=50 width=50>";
-        // cell.setAttribute("data-indic", indicator);
     }
 }
 
@@ -90,13 +88,17 @@ function fireArrow(node) {
     let playerCell = node.cellIndex;
     if (dist(cell, playerCell, row, playerRow) <= 1.5) {
         if (node.innerHTML === "W"){
-            // TODO: Implement a better win.
+            // ===== WINING CONDITION =====
+            clearTimeout(window.gameTime);
+            window.started = false;
+            addAlert("You Have Killed The Wumpus!");
+            addAlert("You Win!");
         } else {
             console.log("Miss!");
-            // TODO: Tell player they missed.
+            addAlert("You Missed The Wumpus...")
         }
     } else {
-        // TODO: Tell player they are not in range.
+        addAlert("You Cannot Shoot That Far!");
         console.log("Out of Range!");
     }
 }
@@ -130,19 +132,29 @@ function move(direction) {
     cell.setAttribute("class", "active");
     if (cell.innerHTML.includes("B") && cell.innerHTML.includes("S")){
         cell.style.backgroundImage = "url('both.gif')";
+        addAlert("There Is A Breeze And A Stench, Be Careful...");
     } else if (cell.innerHTML.includes("S")) {
         cell.style.backgroundImage = "url('stench.gif')";
+        addAlert("You Smell A Stench...");
     } else if (cell.innerHTML.includes("B")){
         cell.style.backgroundImage = "url('wind.gif')";
+        addAlert("You Feel A Breeze...");
     } else if (cell.innerHTML === "W"){
+        // ===== LOSING CONDITION =====
+        clearTimeout(window.gameTime);
+        window.started = false;
+        addAlert("You Have Been Eaten By The Wumpus!");
+        addAlert("You Lose!");
         cell.style.backgroundImage = "url('wumpus.gif')";
     } else if (cell.innerHTML === "P"){
-        cell.style.backgroundImage = "url('pit.jpeg')";
-    }
-
-    if (cell.innerHTML === "P" || cell.innerHTML === "W") {
+        // ===== LOSING CONDITION =====
+        clearTimeout(window.gameTime);
         window.started = false;
-        // TODO: Implement a real lose screen? Refresh?
+        addAlert("You Have Fallen Into A Pit!");
+        addAlert("You Lose!");
+        cell.style.backgroundImage = "url('pit.jpeg')";
+    } else if (cell.innerHTML === ""){
+        addAlert("This Space Is Calm...");
     }
 }
 
@@ -170,6 +182,7 @@ function onKeyDown(event) {
 function setLevel(selection){
     window.level = selection;
     console.log("Difficulty was set to: " + window.level);
+    addAlert("Difficulty: " + window.level);
 
     let elementButtons = document.getElementsByClassName('levelButton');
     for (let i = 0; i < elementButtons.length; ++i) {
@@ -189,10 +202,12 @@ function play() {
     startButton[0].style.display = "none";
     window.started = true;
 
-    if (window.level === "easy"){
+    addAlert("Game Has Started!");
+
+    if (window.level === "Easy"){
         window.time = 120;
         setTimeout(timer, 1000);
-    } else if (window.level === "medium"){
+    } else if (window.level === "Medium"){
         window.time = 60;
         setTimeout(timer, 1000);
     } else {
@@ -205,10 +220,20 @@ function play() {
 function timer() {
     window.time--;
     if(window.time > 0){
-        setTimeout(timer,1000);
+        window.gameTime = setTimeout(timer,1000);
     } else {
-        // TODO: THIS IS A LOSING CONDITION
+        // ===== LOSING CONDITION =====
+        clearTimeout(window.gameTime);
         window.started = false;
+        addAlert("Out Of Time!");
+        addAlert("You Lose!");
     }
     document.getElementById("time").innerHTML = "Time Left (Seconds): " + window.time;
+}
+
+function addAlert(alert) {
+    let ul = document.getElementById("alerts");
+    let li = document.createElement("li");
+    li.innerHTML = alert;
+    ul.insertBefore(li, ul.firstChild);
 }
