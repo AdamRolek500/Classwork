@@ -1,18 +1,31 @@
+/**
+ * Logic code for Hunt the Wumpus.
+ *
+ * By: Adam Rolek
+ * Date: 4/20/2020
+ */
+
+
+/**
+ * This function will be run when the web page loads.
+ * This function will set the state of the game, start the game sound track, initialize the map, place all obstacles
+ * and indicators, and place the player on the map.
+ */
 function onLoad() {
     console.log("Loading the game...");
     window.started = false;
     window.addEventListener("keydown", onKeyDown, false);
-
-    console.log("Starting the background music...");
-    let audio = new Audio('background_noise.mp3');
-    audio.addEventListener('ended', function () {
-        this.currentTime = 0;
-        this.play();
-    }, false);
-    audio.play();
-
-    console.log("Initializing the map...");
     let board = document.getElementById("board");
+
+    startMusicLooped("background_noise.mp3");
+    initMap(board);
+    placeWumpus(board);
+    placePit(board);
+    placePlayer(board);
+}
+
+function initMap(board) {
+    console.log("Initializing the map...");
     for (let i = 0; i < 5; i++) {
         let newRow = board.insertRow(); // inserting a new row
         for (let j = 0; j < 5; j++) {
@@ -21,16 +34,22 @@ function onLoad() {
             newCell.setAttribute("onclick", "fireArrow(this)")
         }
     }
+}
 
+function placeWumpus(board) {
     console.log("Placing the Wumpus on the map...");
     let r = Math.floor(Math.random() * 5);
     let c = Math.floor(Math.random() * 5);
     place_indicator(board, 'W', r, c);
     console.log("Placing the Wumpus stench...");
     findingNeighbors(board, r, c, 'S');
+}
 
+function placePit(board) {
     console.log("Placing the Pit on the map...");
     let placed = false;
+    let r = 0;
+    let c = 0;
     do {
         r = Math.floor(Math.random() * 5);
         c = Math.floor(Math.random() * 5);
@@ -42,12 +61,14 @@ function onLoad() {
     } while (!placed);
     console.log("Placing the Pit breeze...");
     findingNeighbors(board, r, c, 'B');
+}
 
+function placePlayer(board) {
     console.log("Placing the Player on the map...");
-    placed = false;
+    let placed = false;
     do {
-        r = Math.floor(Math.random() * 5);
-        c = Math.floor(Math.random() * 5);
+        let r = Math.floor(Math.random() * 5);
+        let c = Math.floor(Math.random() * 5);
         let cell = board.rows[r].cells[c];
         if (cell.innerHTML === "") { // I want a fresh space by design
             cell.setAttribute("class", "active");
@@ -58,6 +79,23 @@ function onLoad() {
     } while (!placed);
 }
 
+function startMusicLooped(file) {
+    console.log("Starting the background music...");
+    let audio = new Audio(file);
+    audio.addEventListener('ended', function () {
+        this.currentTime = 0;
+        this.play();
+    }, false);
+    audio.play();
+}
+
+/**
+ *
+ * @param board
+ * @param i
+ * @param j
+ * @param indicator
+ */
 function findingNeighbors(board, i, j, indicator) {
     let rowLimit = 4;
     let columnLimit = 4;
@@ -70,6 +108,13 @@ function findingNeighbors(board, i, j, indicator) {
     }
 }
 
+/**
+ *
+ * @param board
+ * @param indicator
+ * @param r
+ * @param c
+ */
 function place_indicator(board, indicator, r, c) {
     if (r >= 0 && r <= 4 && c >= 0 && c <= 4) {
         let cell = board.rows[r].cells[c];
@@ -78,6 +123,10 @@ function place_indicator(board, indicator, r, c) {
     }
 }
 
+/**
+ *
+ * @param node
+ */
 function fireArrow(node) {
     if (!window.started) {
         return;
@@ -100,39 +149,51 @@ function fireArrow(node) {
     }
 }
 
+/**
+ *
+ * @param x1
+ * @param x2
+ * @param y1
+ * @param y2
+ * @returns {number}
+ */
 function dist(x1, x2, y1, y2) {
     let xi = x2 - x1;
     let yi = y2 - y1;
     return Math.sqrt((xi * xi) + (yi * yi));
 }
 
+/**
+ *
+ * @param direction
+ */
 function move(direction) {
     let board = document.getElementById("board");
     let cell = board.rows[window.playerRow].cells[window.playerCell];
     switch (direction) {
         case '^':
-            if (window.playerRow - 1 < 0){
+            if (window.playerRow - 1 < 0) {
                 addAlert("You Have Hit A Wall!");
                 return;
             }
             window.playerRow--;
             break;
         case '<':
-            if (window.playerCell - 1 < 0){
+            if (window.playerCell - 1 < 0) {
                 addAlert("You Have Hit A Wall!");
                 return;
             }
             window.playerCell--;
             break;
         case '>':
-            if (window.playerCell + 1 > 4){
+            if (window.playerCell + 1 > 4) {
                 addAlert("You Have Hit A Wall!");
                 return;
             }
             window.playerCell++;
             break;
         case 'v':
-            if (window.playerRow + 1 > 4){
+            if (window.playerRow + 1 > 4) {
                 addAlert("You Have Hit A Wall!");
                 return;
             }
@@ -169,6 +230,10 @@ function move(direction) {
     }
 }
 
+/**
+ *
+ * @param event
+ */
 function onKeyDown(event) {
     if (!window.started) {
         return;
@@ -190,6 +255,10 @@ function onKeyDown(event) {
     }
 }
 
+/**
+ *
+ * @param selection
+ */
 function setLevel(selection) {
     window.level = selection;
     console.log("Difficulty was set to: " + window.level);
@@ -207,6 +276,9 @@ function setLevel(selection) {
     startButton[0].style.display = "initial";
 }
 
+/**
+ *
+ */
 function play() {
     console.log("Starting the game...");
     let startButton = document.getElementsByClassName("startButton");
@@ -228,6 +300,9 @@ function play() {
     document.getElementById("time").innerHTML = "Time Left (Seconds): " + window.time;
 }
 
+/**
+ *
+ */
 function timer() {
     window.time--;
     if (window.time > 0) {
@@ -241,6 +316,10 @@ function timer() {
     document.getElementById("time").innerHTML = "Time Left (Seconds): " + window.time;
 }
 
+/**
+ *
+ * @param alert
+ */
 function addAlert(alert) {
     let ul = document.getElementById("alerts");
     let li = document.createElement("li");
@@ -248,6 +327,9 @@ function addAlert(alert) {
     ul.insertBefore(li, ul.firstChild);
 }
 
+/**
+ *
+ */
 function gameEnd() {
     clearTimeout(window.gameTime);
     window.started = false;
