@@ -12,7 +12,7 @@
     height: 40px;
 }
 
-.startButton {
+.startButton, .restartButton {
     display: none;
     width: 284px;
     height: 40px;

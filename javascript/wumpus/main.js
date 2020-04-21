@@ -5,7 +5,7 @@ function onLoad() {
 
     console.log("Starting the background music...");
     let audio = new Audio('background_noise.mp3');
-    audio.addEventListener('ended', function() {
+    audio.addEventListener('ended', function () {
         this.currentTime = 0;
         this.play();
     }, false);
@@ -61,9 +61,9 @@ function onLoad() {
 function findingNeighbors(board, i, j, indicator) {
     let rowLimit = 4;
     let columnLimit = 4;
-    for(let row = Math.max(0, i-1); row <= Math.min(i+1, rowLimit); row -= -1) {
-        for(let cell = Math.max(0, j-1); cell <= Math.min(j+1, columnLimit); cell -= -1) {
-            if(row !== i || cell !== j) {
+    for (let row = Math.max(0, i - 1); row <= Math.min(i + 1, rowLimit); row -= -1) {
+        for (let cell = Math.max(0, j - 1); cell <= Math.min(j + 1, columnLimit); cell -= -1) {
+            if (row !== i || cell !== j) {
                 place_indicator(board, indicator, row, cell);
             }
         }
@@ -87,19 +87,16 @@ function fireArrow(node) {
     let playerRow = node.parentNode.rowIndex;
     let playerCell = node.cellIndex;
     if (dist(cell, playerCell, row, playerRow) <= 1.5) {
-        if (node.innerHTML === "W"){
+        if (node.innerHTML === "W") {
             // ===== WINING CONDITION =====
-            clearTimeout(window.gameTime);
-            window.started = false;
+            gameEnd();
             addAlert("You Have Killed The Wumpus!");
             addAlert("You Win!");
         } else {
-            console.log("Miss!");
             addAlert("You Missed The Wumpus...")
         }
     } else {
         addAlert("You Cannot Shoot That Far!");
-        console.log("Out of Range!");
     }
 }
 
@@ -108,52 +105,66 @@ function dist(x1, x2, y1, y2) {
     let yi = y2 - y1;
     return Math.sqrt((xi * xi) + (yi * yi));
 }
-// TODO: Make sure the player is not moving off the board
+
 function move(direction) {
     let board = document.getElementById("board");
     let cell = board.rows[window.playerRow].cells[window.playerCell];
-    cell.setAttribute("class", "space");
     switch (direction) {
         case '^':
+            if (window.playerRow - 1 < 0){
+                addAlert("You Have Hit A Wall!");
+                return;
+            }
             window.playerRow--;
             break;
         case '<':
+            if (window.playerCell - 1 < 0){
+                addAlert("You Have Hit A Wall!");
+                return;
+            }
             window.playerCell--;
             break;
         case '>':
+            if (window.playerCell + 1 > 4){
+                addAlert("You Have Hit A Wall!");
+                return;
+            }
             window.playerCell++;
             break;
         case 'v':
+            if (window.playerRow + 1 > 4){
+                addAlert("You Have Hit A Wall!");
+                return;
+            }
             window.playerRow++;
             break;
     }
 
+    cell.setAttribute("class", "space");
     cell = board.rows[window.playerRow].cells[window.playerCell];
     cell.setAttribute("class", "active");
-    if (cell.innerHTML.includes("B") && cell.innerHTML.includes("S")){
+    if (cell.innerHTML.includes("B") && cell.innerHTML.includes("S")) {
         cell.style.backgroundImage = "url('both.gif')";
         addAlert("There Is A Breeze And A Stench, Be Careful...");
     } else if (cell.innerHTML.includes("S")) {
         cell.style.backgroundImage = "url('stench.gif')";
         addAlert("You Smell A Stench...");
-    } else if (cell.innerHTML.includes("B")){
+    } else if (cell.innerHTML.includes("B")) {
         cell.style.backgroundImage = "url('wind.gif')";
         addAlert("You Feel A Breeze...");
-    } else if (cell.innerHTML === "W"){
+    } else if (cell.innerHTML === "W") {
         // ===== LOSING CONDITION =====
-        clearTimeout(window.gameTime);
-        window.started = false;
+        gameEnd();
         addAlert("You Have Been Eaten By The Wumpus!");
         addAlert("You Lose!");
         cell.style.backgroundImage = "url('wumpus.gif')";
-    } else if (cell.innerHTML === "P"){
+    } else if (cell.innerHTML === "P") {
         // ===== LOSING CONDITION =====
-        clearTimeout(window.gameTime);
-        window.started = false;
+        gameEnd();
         addAlert("You Have Fallen Into A Pit!");
         addAlert("You Lose!");
         cell.style.backgroundImage = "url('pit.jpeg')";
-    } else if (cell.innerHTML === ""){
+    } else if (cell.innerHTML === "") {
         addAlert("This Space Is Calm...");
     }
 }
@@ -179,7 +190,7 @@ function onKeyDown(event) {
     }
 }
 
-function setLevel(selection){
+function setLevel(selection) {
     window.level = selection;
     console.log("Difficulty was set to: " + window.level);
     addAlert("Difficulty: " + window.level);
@@ -204,10 +215,10 @@ function play() {
 
     addAlert("Game Has Started!");
 
-    if (window.level === "Easy"){
+    if (window.level === "Easy") {
         window.time = 120;
         setTimeout(timer, 1000);
-    } else if (window.level === "Medium"){
+    } else if (window.level === "Medium") {
         window.time = 60;
         setTimeout(timer, 1000);
     } else {
@@ -219,12 +230,11 @@ function play() {
 
 function timer() {
     window.time--;
-    if(window.time > 0){
-        window.gameTime = setTimeout(timer,1000);
+    if (window.time > 0) {
+        window.gameTime = setTimeout(timer, 1000);
     } else {
         // ===== LOSING CONDITION =====
-        clearTimeout(window.gameTime);
-        window.started = false;
+        gameEnd();
         addAlert("Out Of Time!");
         addAlert("You Lose!");
     }
@@ -236,4 +246,12 @@ function addAlert(alert) {
     let li = document.createElement("li");
     li.innerHTML = alert;
     ul.insertBefore(li, ul.firstChild);
+}
+
+function gameEnd() {
+    clearTimeout(window.gameTime);
+    window.started = false;
+    document.getElementById("time").style.display = "none";
+    let restartButton = document.getElementsByClassName("restartButton");
+    restartButton[0].style.display = "initial";
 }
