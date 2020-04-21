@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+Author: Adam Rolek
+Date: 1/13/2020
+Title: index.html
+-->
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Javascript Week 1</title>
+        <script src="index.js"></script>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <link rel="shortcut icon" href="favicon.png" />
+
+    </head>
+
+    <body>
+        <!--Page Title-->
+        <div id="header">
+            <h1>Simple Calculator</h1>
+        </div>
+        <!--Calculation entry form-->
+        <div id="inputForm">
+            <!--Returning 'false' so the page will hold after submitting-->
+            <form onsubmit="calculate(); return false;">
+                <input type="number" id="number1" value="0">
+                <select id="operation">
+                    <option value="ADD">+</option>
+                    <option value="SUBTRACT">-</option>
+                    <option value="MULTIPLY">*</option>
+                    <option value="DIVIDE">/</option>
+                </select>
+                <input type="number" id="number2" value="0">
+                <input type="submit" value="Submit">
+            </form>
+            <p id="final_product"></p>
+        </div>
+    </body>
+
+</html>

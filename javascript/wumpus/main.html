@@ -14,20 +14,13 @@
             <table id="board" border="1"></table> <!-- I will fill the table with Javascript on load. -->
         </div>
         <div id="buttonsDiv">
-            <button onclick="move('^')" class="directionButton">
-                <i class="arrow up"></i>
-            </button>
-            <br>
-            <button onclick="move('<')" class="directionButton">
-                <i class="arrow left"></i>
-            </button>
-            <button onclick="move('>')" class="directionButton">
-                <i class="arrow right"></i>
-            </button>
-            <br>
-            <button onclick="move('v')" class="directionButton">
-                <i class="arrow down"></i>
-            </button>
+            <button onclick="setLevel('easy')" class="levelButton">Easy</button>
+            <button onclick="setLevel('medium')" class="levelButton">Medium</button>
+            <button onclick="setLevel('hard')" class="levelButton">Hard</button>
+            <button onclick="play()" class="startButton">Start</button>
+        </div>
+        <div id="scoreBoard">
+            <p id="time"></p>
         </div>
     </div>
 </body>
